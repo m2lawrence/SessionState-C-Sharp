@@ -1,53 +1,8 @@
 # SessionState-C-Sharp
-Single User Global Data
 
+Single User Global Data.
 
+SessionState = Single User who gets their own Session ID found in the URL,
+data available for all web pages, so it's global data.
 
-SessionState = data available for all web pages. Use this one!!!
-
-1. In the Page_Load type the state required below:
-
-if (!IsPostBack)
-{
-    if (Session["Clicks"] == null)
-    {
-        Session["Clicks"] = 0;
-    }
-    TextBox1.Text = Session["Clicks"].ToString();
-    }
-}
-
-2. In the Button1_Click type the counter to store the ["Clicks"] below:
-
-//here the int variable ClicksCount, stores the Session clicks and increments up 1.
-int ClicksCount = (int)Session["Clicks"] + 1;
-//here convert int to string and store the session memory in the TextBox1.
-TextBox1.Text = ClicksCount.ToString();
-//here the session memory gets stored back into the int variable ClicksCount.
-Session["Clicks"] = ClicksCount;
-
-3. In the Web.Config file inside the brackets <system.web> add the sessionState mode In Process:
-
-<sessionState mode="InProc" cookieless="false"></sessionState>
-
-//---------------------------------------
-If you want it to time out type in:
-
-<authentication mode="Forms">
-   <forms loginUrl="~/Account/Login.aspx"
-
-//---------------------------------------
-
---- Important!! ---
-"Session State Data" is available across all pages but only for a single user, if you use a 
-Session State ID. To do this you have to tell the web server NOT to use cookies when storing 
-data, then it will create an automatically generated ID Number to store the data in.
-
-To do this simply change the tag: cookieless="true", now it will generate the Unique Session
-ID Numbers which you can see in the URL.
-The computer knows which user it is because of the unique session id that it gave it.
-
-This session state data is stored on the server, and cleared when the session times out, the
-default is 20 minutes and is configurable in the web.config file. 
-
-Type in the <sessionstate> tag the minutes you require the server to timeout and delete the data: timeout="1".
+This is perfect technology for a single user, and NOT multiple users. 
