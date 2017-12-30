@@ -1,0 +1,123 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SessionState.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %></title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/">SessionState</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a runat="server" href="~/">SessionState1</a></li>
+                        <li><a runat="server" href="~/SessionState2">SessionState2</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>
+                    
+SessionState = data available for all web pages. Use this one!!! <br /><br />
+
+1. In the Page_Load type the state required below:<br /><br />
+
+if (!IsPostBack)<br />
+{<br />
+    if (Session["Clicks"] == null)<br />
+    {<br />
+        Session["Clicks"] = 0;<br />
+    }<br />
+    TextBox1.Text = Session["Clicks"].ToString();<br />
+    }<br />
+}<br /><br />
+
+2. In the Button1_Click type the counter to store the ["Clicks"] below:<br /><br />
+
+//here the int variable ClicksCount, stores the Session clicks and increments up 1.<br />
+int ClicksCount = (int)Session["Clicks"] + 1;<br />
+//here convert int to string and store the session memory in the TextBox1.<br />
+TextBox1.Text = ClicksCount.ToString();<br />
+//here the session memory gets stored back into the int variable ClicksCount.<br />
+Session["Clicks"] = ClicksCount;<br /><br />
+
+3. In the Web.Config file inside the brackets "system.web" add the sessionState mode In Process:<br /><br />
+
+"sessionState mode="InProc" cookieless="false"    /"sessionState"<br />
+
+//---------------------------------------<br />
+If you want it to time out type in:<br /><br />
+
+ "system.web"<br />
+    <!-- add in this line below. --><br />
+    "sessionState mode="InProc" cookieless="true" timeout="20"    /"sessionState"<br />
+    <!-- ******* default timeout is 20 minutes **************** --><br /><br />
+    
+//---------------------------------------<br /><br />
+
+--- Important!! ---<br />
+"Session State Data" is available across all pages but only for a single user, if you use a <br />
+Session State ID. To do this you have to tell the web server NOT to use cookies when storing <br />
+data, then it will create an automatically generated ID Number to store the data in.<br /><br />
+
+To do this simply change the tag: cookieless="true", now it will generate the Unique Session<br />
+ID Numbers which you can see in the URL.<br />
+The computer knows which user it is because of the unique session id that it gave it.<br /><br />
+
+This session state data is stored on the server, and cleared when the session times out, the<br />
+default is 20 minutes and is configurable in the web.config file. <br /><br />
+
+Type in the "sessionstate" tag the minutes you require the server to timeout and delete the data: timeout="1".<br />
+                </p>
+            </footer>
+        </div>
+
+    </form>
+</body>
+</html>
